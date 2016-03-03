@@ -216,9 +216,34 @@ int BinaryTree<keytype>::remove(keytype key)
             keynode->parent->lchild = keynode->rchild;
         else
             keynode->parent->rchild = keynode->rchild;
-        keynode->rchild->parent = keynode->parent;
-
+        if(keynode->rchild != nullptr)
+            keynode->rchild->parent = keynode->parent;
     }
-
+    else if(keynode->rchild == nullptr)
+    {
+        if(keynode->parent->lchild == keynode)
+            keynode->parent->lchild = keynode->lchild;
+        else
+            keynode->parent->rchild = keynode->lchild;
+        if(keynode->lchild != nullptr)
+            keynode->lchild->parent = keynode->parent;
+    }
+    else
+    {
+        treenode<keytype> *p = keynode->rchild;
+        while(p->lchild != nullptr)
+            p = p->lchild;
+        if(p->parent != keynode)
+        {
+            p->parent->lchild = p->rchild;
+            p->rchild->parent = p->parent;
+            p->rchild = keynode->rchild;
+        }
+        p->lchild = keynode->lchild;
+        p->parent = keynode->parent;
+    }
+    treesize--;
+    delete(keynode);
+    return 1;
 }
 #endif //INTRODUCTIONTOALGORITHMS_BINARYSEARCHTREE_H

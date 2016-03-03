@@ -13,5 +13,10 @@ int main() {
     for(auto it = v.begin(); it != v.end(); it++)
         cout<<*it<<" ";
     cout<<endl;
+    bt.remove(2);
+    vector<int> v1 = bt.inorder();
+    for(auto it = v1.begin(); it != v1.end(); it++)
+        cout<<*it<<" ";
+    cout<<endl;
     return 0;
 }
